@@ -1,0 +1,16 @@
+/* Globale Reset-Styles: Seitenrand entfernen und volle Höhe sicherstellen */
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+/* Sicherstellen, dass die App den kompletten Viewport nutzt */
+app-root, body, #root {
+	min-height: 100%;
+}
+
+/* Optional: setze einen neutralen Hintergrund, wenn keine Komponente ihn überschreibt */
+body {
+	background-color: #f8fafc;
+}
