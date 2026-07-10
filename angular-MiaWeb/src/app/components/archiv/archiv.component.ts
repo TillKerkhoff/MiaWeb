@@ -19,9 +19,7 @@ interface FileNode {
   styleUrls: ['./archiv.component.scss']
 })
 export class ArchivComponent implements OnInit {
-  treeControl = new NestedTreeControl<FileNode>(node => node.children);
-  dataSource = new MatTreeNestedDataSource<FileNode>();
-  hasChild = (_: number, node: FileNode) => !!node.children && node.children.length > 0;
+
 
   constructor() {
 
