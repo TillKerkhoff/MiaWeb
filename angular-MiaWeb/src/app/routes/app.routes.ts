@@ -31,8 +31,6 @@ export const routes: Routes = [
   },
   {
     path: 'archiv',
-    component: ArchivComponent,
-    canActivate: [RoleGuard],
-    data: { permission: 'view_archiv' }
+    component: ArchivComponent
   }
 ];
