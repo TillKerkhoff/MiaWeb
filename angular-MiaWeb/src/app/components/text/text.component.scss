@@ -65,9 +65,10 @@
   width: 100%;
   height: auto;
   display: block;
-  object-position: center; // Zentriert das Motiv im Ausschnitt
+  object-position: center; 
+  border-radius: 8px;       
+  cursor: pointer;
 
-  // Kleiner Hover-Effekt (optional)
   &:hover {
     transform: scale(1.05);
   }

@@ -23,7 +23,11 @@
         @for (img of images; track img) {
           <mat-card class="inner-card">
             <mat-card-content>
-              <img [src]="img" alt="Galerie Foto" class="gallery-img">
+              <img 
+                [src]="img" 
+                alt="Galerie Foto" 
+                class="gallery-img"
+                (click)="openImagePopup(img)">
             </mat-card-content>
           </mat-card>
         }
