@@ -1,10 +1,10 @@
 {
   "routes": {
-    "/": {},
-    "/aboutMe": {},
-    "/anmeldung": {},
-    "/archiv": {},
-    "/home": {},
-    "/welcome": {}
+    "/MiaWeb": {},
+    "/MiaWeb/aboutMe": {},
+    "/MiaWeb/anmeldung": {},
+    "/MiaWeb/archiv": {},
+    "/MiaWeb/home": {},
+    "/MiaWeb/welcome": {}
   }
 }

@@ -1,6 +1,6 @@
 
 export default {
-  basePath: '/',
+  basePath: '/MiaWeb',
   allowedHosts: [],
   supportedLocales: {
   "en-US": ""
