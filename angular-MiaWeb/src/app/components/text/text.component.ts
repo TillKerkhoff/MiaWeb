@@ -13,16 +13,19 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./text.component.scss']
 })
 export class TextComponent implements OnInit, OnDestroy {
-  fileName = '';
-  content: String = '';
-  private http = inject(HttpClient);
-  private cdr = inject(ChangeDetectorRef);
-   private subscription!: Subscription;
+    fileName = '';
+    content: String = '';
+    private http = inject(HttpClient);
+    private cdr = inject(ChangeDetectorRef);
+    private subscription!: Subscription;
+    currentView: 'text' | 'photos' = 'text';
+    images: string[] = [];
 
   constructor(private interactionService: TextInteractionService) {}
 
   ngOnInit(): void {
-    this.loadDefaultText();
+    // this.loadDefaultText();
+    this.loadPhotos();
 
     // Höre auf Events aus dem Service
     this.subscription = this.interactionService.loadText$.subscribe((uebergebenerText: string) => {
@@ -32,6 +35,7 @@ export class TextComponent implements OnInit, OnDestroy {
   }
 
   private loadText(text: string): void {
+    this.currentView = 'text';
     this.http.get(`assets/texte/${text}.txt`, { responseType: 'text' })
       .subscribe({
         next: (data) => {
@@ -47,6 +51,7 @@ export class TextComponent implements OnInit, OnDestroy {
   }
 
   private loadDefaultText(): void {
+    this.currentView = 'text';
     this.http.get('assets/texte/Willkommen.txt', { responseType: 'text' })
       .subscribe({
         next: (data) => {
@@ -59,6 +64,17 @@ export class TextComponent implements OnInit, OnDestroy {
           console.error('Fehler beim Laden der Datei:', error);
         }
       });
+  }
+
+  loadPhotos() {
+    this.currentView = 'photos';
+    
+    // Simuliertes Laden der Bildpfade
+    this.images = [
+      'assets/fotos/foto1.png',
+      'assets/fotos/foto2.png',
+      'assets/fotos/foto3.png'
+    ];
   }
 
   ngOnDestroy() {

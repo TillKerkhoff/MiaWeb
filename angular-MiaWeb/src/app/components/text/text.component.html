@@ -1,8 +1,34 @@
+
+@if (currentView === 'text') {
+
 <mat-card class="text-panel-card" appearance="outlined">
     <div class="text-panel-content">
-        <h1>{{ fileName }}</h1>
+        <h1 align="center">{{ fileName }}</h1>
         <div class="file-content">
             <p>{{ content }}</p>
         </div>
     </div>
 </mat-card>
+
+} @else if (currentView === 'photos') {
+  
+  <!-- DAS NEUE HTML FÜR DIE FOTO-GALERIE -->
+  <mat-card class="text-panel-card" appearance="outlined">
+    <div>
+      <h1 align="center">Fotogalerie</h1>
+    </div>
+
+    <mat-card-content class="scroll-container">
+      <div class="image-grid">
+        @for (img of images; track img) {
+          <mat-card class="inner-card">
+            <mat-card-content>
+              <img [src]="img" alt="Galerie Foto" class="gallery-img">
+            </mat-card-content>
+          </mat-card>
+        }
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+}

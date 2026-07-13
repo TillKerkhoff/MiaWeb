@@ -32,3 +32,16 @@
   font-family: inherit;
   font-size: 1rem;
 }
+
+.scroll-container {
+  max-height: 100%; 
+  overflow-y: auto;  
+  padding-right: 10px; 
+}
+
+.inner-card {
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
