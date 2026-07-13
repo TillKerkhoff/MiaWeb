@@ -241,7 +241,7 @@ Hunderte Meter wanderten sie durch ein Labyrinth an leeren Quartieren und Gemein
 Die Wende sind geschmückt mit Flaggen die der Imperialen aus dem Bruderkrieg ähneln.
 Jede Flagge ist mit einem goldenen Schriftzug verziert >Das Imperium der Menschheit< und in der oberen rechten
 Ecke thront ein schwarzer Flügel, welcher in Klauen eines Adlers enden die nach einem Planeten greifen - Diesen
-Planeten. ^1
+Planeten. 
 Nakikoth berührt eine Rune, woraufhin sich der Aufzug öffnet.
 Die beiden Krieger Steigen ein und der Aufzug setzt sich in Bewegung. Wenige Sekunden später bleibt er stehen und
 beide steigen aus.
@@ -257,7 +257,7 @@ Vier Menschen betreten der Raum, in den sich die beiden Space Marines befinden.
 Einer der Menschen nickt, woraufhin die Gruppe in den Aufzug einsteigt.
 >>Hat euch Bruder Nikolnus gut her geführt?<<
 Mecaleus führt den Squad weiter an, nachdem Isos der Ballraum weiter erkunden wollte.
->>Diesmal belieben alle zusammen<<
+>>Diesmal blieben alle zusammen<<
 Dies war der Befehl den sie zum Abschied bekamen.
 Die drei übrig gebliebenen Krieger schreiten vorsichtig durch die Flure des verlassenden Palasts.
 Das Mondlicht erfüllt die Luft mit einem leichten Schimmer.

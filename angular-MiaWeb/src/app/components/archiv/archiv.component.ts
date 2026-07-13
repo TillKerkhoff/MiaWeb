@@ -32,4 +32,10 @@ export class ArchivComponent implements OnInit {
     console.log('Name of the clicked button:', name);
     this.interactionService.triggerLoadText(name);
   }
+
+  buttonClickPhotos(foldername: string): void {
+    console.log('Button clicked in ArchivComponent for photos');
+    console.log('Folder name of the clicked button:', foldername);
+    this.interactionService.loadPhotos(foldername);
+  }
 }

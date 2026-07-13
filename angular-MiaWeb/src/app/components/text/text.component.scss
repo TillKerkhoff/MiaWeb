@@ -40,8 +40,45 @@
 }
 
 .inner-card {
-  padding: 8px;
+  flex: 0 0 45%;          // Bleibt bei maximal 45% Breite
+  max-width: 45%;         // Garantiert die maximale Breite von 45%
+  
+  // GEÄNDERT: Die feste Höhe fliegt raus, damit die Box mit dem Bild wachsen darf!
+  height: auto;           
+  
+  // HINZUGEFÜGT: Da du einen Hover-Effekt mit scale(1.05) hast, lassen wir overflow nur 
+  // beim Hovern zu, sonst würde das Bild beim Vergrößern über die abgerundeten Ecken blitzen.
+  overflow: hidden; 
+  
+  border-radius: 8px;     
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  
+  // Für Mobile (angepasst auf auto-Höhe)
+  @media (max-width: 600px) {
+    flex: 0 0 100%;
+    max-width: 100%;
+    height: auto; // Auch auf dem Handy flexibel hoch
+  }
+}
+
+.gallery-img{
+  width: 100%;
+  height: auto;
+  display: block;
+  object-position: center; // Zentriert das Motiv im Ausschnitt
+
+  // Kleiner Hover-Effekt (optional)
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.image-grid {
   display: flex;
+  flex-wrap: wrap;
+  gap: 4%;                  // 45% + 4% + 45% = 94% (lässt genug Puffer an den Rändern)
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;  // Verhindert, dass ungleich hohe Bilder verzerrt werden
+  width: 100%;
+  padding: 1rem 0;
 }

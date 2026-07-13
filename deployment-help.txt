@@ -1,0 +1,5 @@
+1) auf mein gehen
+2) per terminal "git merge work_On"
+3) Branch release löschen und neu erstellen aus Main  
+4) ng add angular-cli-ghpages
+5) ng deploy --base-href=/MiaWeb/
