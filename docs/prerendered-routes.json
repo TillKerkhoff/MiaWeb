@@ -1,0 +1,10 @@
+{
+  "routes": {
+    "/": {},
+    "/aboutMe": {},
+    "/anmeldung": {},
+    "/archiv": {},
+    "/home": {},
+    "/welcome": {}
+  }
+}
