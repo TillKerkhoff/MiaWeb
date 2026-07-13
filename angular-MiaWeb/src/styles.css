@@ -12,5 +12,5 @@ app-root, body, #root {
 
 /* Optional: setze einen neutralen Hintergrund, wenn keine Komponente ihn überschreibt */
 body {
-	background-color: #f8fafc;
+	background-color: #0a0a0a;
 }

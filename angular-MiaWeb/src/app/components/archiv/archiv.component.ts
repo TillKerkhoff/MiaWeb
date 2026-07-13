@@ -5,6 +5,7 @@ import { MatTreeModule, MatTreeNestedDataSource } from '@angular/material/tree';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { TextComponent } from '../text/text.component';
 
 interface FileNode {
   name: string;
@@ -14,7 +15,7 @@ interface FileNode {
 @Component({
   selector: 'app-archiv',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatTreeModule, MatIconModule, MatButtonModule],
+  imports: [CommonModule, MatCardModule, MatTreeModule, MatIconModule, MatButtonModule, TextComponent],
   templateUrl: './archiv.component.html',
   styleUrls: ['./archiv.component.scss']
 })

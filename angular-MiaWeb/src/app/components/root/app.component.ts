@@ -13,6 +13,8 @@ import { RouterOutlet } from '@angular/router';
   styles: [
     `
       .app-shell {
+        min-height: 100vh;
+        background-color: #0a0a0a;
       }
       h1 {
         font-size: clamp(2rem, 4vw, 2.75rem);
