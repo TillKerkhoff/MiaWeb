@@ -1,5 +1,5 @@
-import { Component, OnInit, inject, ChangeDetectorRef, OnDestroy, Inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, inject, ChangeDetectorRef, OnDestroy, Inject, PLATFORM_ID } from '@angular/core'; // <-- PLATFORM_ID hinzugefügt
+import { CommonModule, isPlatformBrowser } from '@angular/common'; // <-- isPlatformBrowser hinzugefügt
 import { HttpClient } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 import { TextInteractionService } from '../../services/textInteractionService';
@@ -19,6 +19,7 @@ export class TextComponent implements OnInit, OnDestroy {
   private dialog = inject(MatDialog);
   private http = inject(HttpClient);
   private cdr = inject(ChangeDetectorRef);
+  private platformId = inject(PLATFORM_ID); // <-- Plattform-ID injiziert
   private subscription!: Subscription;
   currentView: 'text' | 'photos' = 'text';
   images: string[] = [];
@@ -43,32 +44,40 @@ export class TextComponent implements OnInit, OnDestroy {
 
   private loadText(text: string): void {
     this.currentView = 'text';
-    this.http.get(`assets/texte/${text}.txt`, { responseType: 'text' })
-      .subscribe({
-        next: (data) => {
-          this.fileName = text;
-          this.content = data;
-          this.cdr.detectChanges();
-        },
-        error: (error) => {
-          console.error('Fehler beim Laden der Datei:', error);
-        }
-      });
+    
+    // Nur im Browser ausführen (verhindert Prerender-Fehler)
+    if (isPlatformBrowser(this.platformId)) {
+      this.http.get(`assets/texte/${text}.txt`, { responseType: 'text' })
+        .subscribe({
+          next: (data) => {
+            this.fileName = text;
+            this.content = data;
+            this.cdr.detectChanges();
+          },
+          error: (error) => {
+            console.error('Fehler beim Laden der Datei:', error);
+          }
+        });
+    }
   }
 
   private loadDefaultText(): void {
     this.currentView = 'text';
-    this.http.get('assets/texte/Willkommen.txt', { responseType: 'text' })
-      .subscribe({
-        next: (data) => {
-          this.fileName = 'Willkommen';
-          this.content = data;
-          this.cdr.detectChanges();
-        },
-        error: (error) => {
-          console.error('Fehler beim Laden der Datei:', error);
-        }
-      });
+    
+    // Nur im Browser ausführen (verhindert Prerender-Fehler)
+    if (isPlatformBrowser(this.platformId)) {
+      this.http.get('assets/texte/Willkommen.txt', { responseType: 'text' })
+        .subscribe({
+          next: (data) => {
+            this.fileName = 'Willkommen';
+            this.content = data;
+            this.cdr.detectChanges();
+          },
+          error: (error) => {
+            console.error('Fehler beim Laden der Datei:', error);
+          }
+        });
+    }
   }
 
   loadPhotos(foldername: string) {
@@ -76,21 +85,24 @@ export class TextComponent implements OnInit, OnDestroy {
     this.currentView = 'photos';
     this.images = []; 
 
-    this.http.get<string[]>(`assets/fotos/${foldername}/images.json`).subscribe({
-      next: (imageNames) => {
-        this.images = [];
-        this.cdr.detectChanges();
+    // Nur im Browser ausführen (verhindert Prerender-Fehler)
+    if (isPlatformBrowser(this.platformId)) {
+      this.http.get<string[]>(`assets/fotos/${foldername}/images.json`).subscribe({
+        next: (imageNames) => {
+          this.images = [];
+          this.cdr.detectChanges();
 
-        const neuePfade = imageNames.map(name => `assets/fotos/${foldername}/${name}`);
-        this.images = [...neuePfade];
-        
-        this.cdr.markForCheck(); 
-        this.cdr.detectChanges();
-      },
-      error: (err) => {
-        console.error(`Konnte images.json für ${foldername} nicht laden:`, err);
-      }
-    });
+          const neuePfade = imageNames.map(name => `assets/fotos/${foldername}/${name}`);
+          this.images = [...neuePfade];
+          
+          this.cdr.markForCheck(); 
+          this.cdr.detectChanges();
+        },
+        error: (err) => {
+          console.error(`Konnte images.json für ${foldername} nicht laden:`, err);
+        }
+      });
+    }
   }
 
   ngOnDestroy() {
@@ -123,7 +135,6 @@ export class TextComponent implements OnInit, OnDestroy {
     </div>
   `,
   styles: [`
-    /* 1. DIE LÖSUNG: Hebelt die Angular Material-Verschachtelung global aus */
     :host ::ng-deep {
       .mat-mdc-dialog-surface {
         background: transparent !important;
@@ -133,7 +144,6 @@ export class TextComponent implements OnInit, OnDestroy {
       .mat-mdc-dialog-container {
         --mdc-dialog-container-space: 0px !important;
       }
-      /* Fallback für ältere Overlays */
       .cdk-overlay-pane {
         background: transparent !important;
       }

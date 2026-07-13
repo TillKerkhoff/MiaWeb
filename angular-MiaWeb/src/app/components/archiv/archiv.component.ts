@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy, inject, ChangeDetectorRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card'; // Import repariert!
+import { Component, OnInit, OnDestroy, inject, ChangeDetectorRef, PLATFORM_ID } from '@angular/core'; // <-- PLATFORM_ID hinzugefügt
+import { CommonModule, isPlatformBrowser } from '@angular/common'; // <-- isPlatformBrowser hinzugefügt
+import { MatCardModule } from '@angular/material/card'; 
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
 import { TextComponent } from '../text/text.component'; 
@@ -17,31 +17,30 @@ export class ArchivComponent implements OnInit, OnDestroy {
   private breakpointObserver = inject(BreakpointObserver);
   private interactionService = inject(TextInteractionService);
   private cdr = inject(ChangeDetectorRef);
+  private platformId = inject(PLATFORM_ID); // <-- Plattform-ID injizieren
 
   isMobile = false;
-  showMobileMenu = false; // Steuert das Handy-Overlay
+  showMobileMenu = false; 
   private breakpointSub!: Subscription;
 
   ngOnInit(): void {
-    // Erkennt automatisch, ob die App auf einem Smartphone läuft (< 768px)
-    this.breakpointSub = this.breakpointObserver
-      .observe([Breakpoints.Handset, '(max-width: 768px)'])
-      .subscribe(result => {
-        this.isMobile = result.matches;
-        this.cdr.detectChanges();
-      });
+    // Führt den Code NUR im echten Browser aus, blockiert den Absturz beim Bauen!
+    if (isPlatformBrowser(this.platformId)) {
+      this.breakpointSub = this.breakpointObserver
+        .observe([Breakpoints.Handset, '(max-width: 768px)'])
+        .subscribe(result => {
+          this.isMobile = result.matches;
+          this.cdr.detectChanges();
+        });
+    }
   }
 
-  // Wird aufgerufen, wenn du auf eine Story klickst
   buttonClick(storyName: string): void {
-    // LÖSUNG: Nutzt jetzt die korrekte Methode aus deinem Service!
     this.interactionService.triggerLoadText(storyName);
     this.showMobileMenu = false; 
   }
 
-  // Wird aufgerufen, wenn du auf ein Foto-Thema klickst
   buttonClickPhotos(folderName: string): void {
-    // LÖSUNG: Nutzt jetzt die korrekte Methode aus deinem Service!
     this.interactionService.loadPhotos(folderName);
     this.showMobileMenu = false; 
   }

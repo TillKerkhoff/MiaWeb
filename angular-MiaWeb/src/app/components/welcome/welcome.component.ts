@@ -7,7 +7,6 @@ import { RouterLink } from '@angular/router';
   imports: [RouterLink],
   template: `
     <main class="welcome-page">
-      <a routerLink="/anmeldung" class="login-icon" title="Anmelden">🔒</a>
       <div class="card">
         <h1>Willkommen bei Mias Webseite</h1>
         <p>Hier finden sie die Themen übersicht</p>
