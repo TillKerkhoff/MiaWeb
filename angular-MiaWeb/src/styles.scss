@@ -1,0 +1,13 @@
+/* Ganz unten in src/styles.scss einfügen: */
+.custom-dialog-container {
+  // Nimmt den weißen Hintergrund und Schatten vom Material-MDC-Container weg
+  .mat-mdc-dialog-surface {
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+  
+  // Entfernt alle erzwungenen Standard-Abstände von Angular Material
+  .mat-mdc-dialog-container {
+    --mdc-dialog-container-space: 0px !important;
+  }
+}

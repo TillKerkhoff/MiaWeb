@@ -15,7 +15,7 @@
   <!-- DAS NEUE HTML FÜR DIE FOTO-GALERIE -->
   <mat-card class="text-panel-card" appearance="outlined">
     <div>
-      <h1 align="center">Fotogalerie</h1>
+      <h1 align="center">Foto von {{ fileName }}</h1>
     </div>
 
     <mat-card-content class="scroll-container">
@@ -23,12 +23,15 @@
         @for (img of images; track img) {
           <mat-card class="inner-card">
             <mat-card-content>
-              <img [src]="img" alt="Galerie Foto" class="gallery-img">
+              <img 
+                [src]="img" 
+                alt="Galerie Foto" 
+                class="gallery-img"
+                (click)="openImagePopup(img)">
             </mat-card-content>
           </mat-card>
         }
       </div>
     </mat-card-content>
   </mat-card>
-
 }

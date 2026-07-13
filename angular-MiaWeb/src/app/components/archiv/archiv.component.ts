@@ -1,35 +1,54 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { TextComponent } from '../text/text.component';
+import { MatCardModule } from '@angular/material/card'; // Import repariert!
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Subscription } from 'rxjs';
+import { TextComponent } from '../text/text.component'; 
 import { TextInteractionService } from '../../services/textInteractionService';
-
-interface FileNode {
-  name: string;
-  children?: FileNode[];
-}
 
 @Component({
   selector: 'app-archiv',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatIconModule, MatButtonModule, TextComponent],
+  imports: [CommonModule, MatCardModule, TextComponent],
   templateUrl: './archiv.component.html',
   styleUrls: ['./archiv.component.scss']
 })
-export class ArchivComponent implements OnInit {
+export class ArchivComponent implements OnInit, OnDestroy {
+  private breakpointObserver = inject(BreakpointObserver);
+  private interactionService = inject(TextInteractionService);
+  private cdr = inject(ChangeDetectorRef);
 
+  isMobile = false;
+  showMobileMenu = false; // Steuert das Handy-Overlay
+  private breakpointSub!: Subscription;
 
-  constructor(private interactionService: TextInteractionService) {
-
+  ngOnInit(): void {
+    // Erkennt automatisch, ob die App auf einem Smartphone läuft (< 768px)
+    this.breakpointSub = this.breakpointObserver
+      .observe([Breakpoints.Handset, '(max-width: 768px)'])
+      .subscribe(result => {
+        this.isMobile = result.matches;
+        this.cdr.detectChanges();
+      });
   }
 
-  ngOnInit(): void {}
+  // Wird aufgerufen, wenn du auf eine Story klickst
+  buttonClick(storyName: string): void {
+    // LÖSUNG: Nutzt jetzt die korrekte Methode aus deinem Service!
+    this.interactionService.triggerLoadText(storyName);
+    this.showMobileMenu = false; 
+  }
 
-  buttonClick(name: string): void {
-    console.log('Button clicked in ArchivComponent');
-    console.log('Name of the clicked button:', name);
-    this.interactionService.triggerLoadText(name);
+  // Wird aufgerufen, wenn du auf ein Foto-Thema klickst
+  buttonClickPhotos(folderName: string): void {
+    // LÖSUNG: Nutzt jetzt die korrekte Methode aus deinem Service!
+    this.interactionService.loadPhotos(folderName);
+    this.showMobileMenu = false; 
+  }
+
+  ngOnDestroy(): void {
+    if (this.breakpointSub) {
+      this.breakpointSub.unsubscribe();
+    }
   }
 }

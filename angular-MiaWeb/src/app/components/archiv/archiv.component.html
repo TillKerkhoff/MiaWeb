@@ -1,41 +1,68 @@
 <div>
+    <!-- Der Header bleibt immer fixed oben angeheftet -->
     <mat-card class="archiv-header" appearance="outlined">
         <div align="center"> 
-            <h1>
-                Archiv
-            </h1>
-            <p>
-                Willkommen im Archiv! hier findest du Texte, Bilder und allerlei Kram!
-            </p>
+            <h1>Archiv</h1>
+            <p>Willkommen im Archiv! Hier findest du Texte, Bilder und allerlei Kram!</p>
         </div>
     </mat-card>
 
     <div class="archiv-body">
-        <mat-card class="archiv-menu-card" appearance="outlined">
-            <div align="center">
-                <h4>
-                    Inhaltsübersicht    
-                </h4>
-                <h4>
-                    _____________________
-                </h4>
-            </div>
-            
-            <div>
-                 <h4 align="center">
-                Storys 
-            </h4>
-            <button matButton   class="inhaltsbutton" (click)="buttonClick('Green Winged Hussars')">Green Winged Hussars</button>
+        <!-- DESKTOP-MENÜ: Wird nur angezeigt, wenn man KEIN Handy nutzt -->
+        @if (!isMobile) {
+            <mat-card class="archiv-menu-card" appearance="outlined">
+                <div align="center">
+                    <h4>Inhaltsübersicht</h4>
+                    <h4>_____________________</h4>
+                </div>
+                
+                <div>
+                    <h4 align="center">Storys</h4>
+                    <button mat-button class="inhaltsbutton" (click)="buttonClick('Green Winged Hussars')">
+                        Green Winged Hussars
+                    </button>
 
-            <h4 align="center">
-                Fotos
-            </h4>   
-            <button matButton   class="inhaltsbutton" (click)="buttonClick('Toskana')">Toskana Fotos </button>
-            </div>
-        </mat-card>
+                    <h4 align="center">Fotos</h4>   
+                    <button mat-button class="inhaltsbutton" (click)="buttonClickPhotos('Toskana')">
+                        Toskana Fotos
+                    </button>
+                </div>
+            </mat-card>
+        }
 
+        <!-- Hauptinhalt (Text-Panel mit deiner app-text Komponente) -->
         <div class="archiv-text-panel">
             <app-text></app-text>
         </div>
     </div>
+
+    <!-- HANDY-MODUS ELEMENTE -->
+    @if (isMobile) {
+        <!-- Schwebender runder Menü-Button unten rechts -->
+        <button class="mobile-fab" (click)="showMobileMenu = true">
+            &#9776;
+        </button>
+
+        <!-- Großes Vollbild-Auswahl-Overlay -->
+        @if (showMobileMenu) {
+            <div class="mobile-menu-overlay">
+                <button class="close-overlay-btn" (click)="showMobileMenu = false">&times;</button>
+                
+                <div class="overlay-content">
+                    <h4>Inhaltsübersicht</h4>
+                    <h4>_____________________</h4>
+
+                    <h4>Storys</h4>
+                    <button mat-button class="inhaltsbutton" (click)="buttonClick('Green Winged Hussars')">
+                        Green Winged Hussars
+                    </button>
+
+                    <h4>Fotos</h4>   
+                    <button mat-button class="inhaltsbutton" (click)="buttonClickPhotos('Toskana')">
+                        Toskana Fotos
+                    </button>
+                </div>
+            </div>
+        }
+    }
 </div>

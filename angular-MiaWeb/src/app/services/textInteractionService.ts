@@ -5,14 +5,22 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class TextInteractionService {
-  // Das Subject transportiert deine Variable (z. B. vom Typ string)
+  // --- Text-Stream ---
   private loadTextSource = new Subject<string>();
-  
-  // Observable, das die TextComponent abonnieren kann
   loadText$ = this.loadTextSource.asObservable();
 
-  // Methode, die von der ArchivComponent aufgerufen wird
   triggerLoadText(value: string) {
     this.loadTextSource.next(value);
+  }
+
+  // --- Foto-Stream ---
+  // Neues Subject für den Ordnernamen
+  private loadPhotosSource = new Subject<string>();
+  // Observable, das die Ziel-Komponente abonnieren kann
+  loadPhotos$ = this.loadPhotosSource.asObservable();
+
+  // Methode, die von deiner ArchivComponent aufgerufen wird
+  loadPhotos(foldername: string) {
+    this.loadPhotosSource.next(foldername);
   }
 }
