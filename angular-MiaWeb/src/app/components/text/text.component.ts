@@ -24,8 +24,8 @@ export class TextComponent implements OnInit, OnDestroy {
   constructor(private interactionService: TextInteractionService) {}
 
   ngOnInit(): void {
-    // this.loadDefaultText();
-    this.loadPhotos();
+    this.loadDefaultText();
+    // this.loadPhotos();
 
     // Höre auf Events aus dem Service
     this.subscription = this.interactionService.loadText$.subscribe((uebergebenerText: string) => {
