@@ -8,7 +8,7 @@
     </mat-card>
 
     <div class="archiv-body">
-        <!-- DESKTOP-MENÜ: Wird nur angezeigt, wenn man KEIN Handy nutzt -->
+        <!-- DESKTOP-MENÜ (Bleibt wie zuvor) -->
         @if (!isMobile) {
             <mat-card class="archiv-menu-card" appearance="outlined">
                 <div align="center">
@@ -17,33 +17,76 @@
                 </div>
                 
                 <div>
-                    <h4 align="center">Storys</h4>
-                    <button mat-button class="inhaltsbutton" (click)="buttonClick('Green Winged Hussars')">
-                        Green Winged Hussars
-                    </button>
-
-                    <h4 align="center">Fotos</h4>   
+                    <!-- ================= STORYS ================= -->
+                    <h3 align="center" class="clickable-header" (click)="toggle('storys')">
+                        Storys 
+                        <span class="arrow" [class.rotated]="isExpanded('storys')">▼</span>
+                    </h3>
                     
-                    <button mat-button class="inhaltsbutton" (click)="buttonClickPhotos('Toskana')">
-                        Toskana Urlaub
-                    </button>
-                    <button mat-button class="inhaltsbutton" (click)="buttonClickPhotos('Abifahrt')">
-                        Abi Fahrt
-                    </button>
-                    <button mat-button class="inhaltsbutton" (click)="buttonClickPhotos('✨me✨')">
-                        Me
-                    </button>
+                    @if (isExpanded('storys')) {
+                        <div class="sub-category-container">
+                            <h4 align="center" class="clickable-header" (click)="toggle('warhammer')">
+                                Warhammer
+                                <span class="arrow" [class.rotated]="isExpanded('warhammer')">▼</span>
+                            </h4>
+                            
+                            @if (isExpanded('warhammer')) {
+                                <div class="button-container">
+                                    <button mat-button class="inhaltsbutton" (click)="buttonClick('Green Winged Hussars')">
+                                        Green Winged Hussars
+                                    </button>
+                                </div>
+                            }
+                        </div>
+                    }
+
+                    <!-- ================= FOTOS ================= -->
+                    <h3 align="center" class="clickable-header" (click)="toggle('fotos')">
+                        Fotos
+                        <span class="arrow" [class.rotated]="isExpanded('fotos')">▼</span>
+                    </h3>
+                    
+                    @if (isExpanded('fotos')) {
+                        <div class="sub-category-container">
+                            <h4 align="center" class="clickable-header" (click)="toggle('urlaub')">
+                                Urlaub
+                                <span class="arrow" [class.rotated]="isExpanded('urlaub')">▼</span>
+                            </h4>
+                            @if (isExpanded('urlaub')) {
+                                <div class="button-container">
+                                    <button mat-button class="inhaltsbutton" (click)="buttonClickPhotos('Toskana')">
+                                        Toskana Urlaub
+                                    </button>
+                                    <button mat-button class="inhaltsbutton" (click)="buttonClickPhotos('Abifahrt')">
+                                        Abi Fahrt
+                                    </button>
+                                </div>
+                            }
+
+                            <h4 align="center" class="clickable-header" (click)="toggle('sonstiges')">
+                                Sonstiges
+                                <span class="arrow" [class.rotated]="isExpanded('sonstiges')">▼</span>
+                            </h4>
+                            @if (isExpanded('sonstiges')) {
+                                <div class="button-container">
+                                    <button mat-button class="inhaltsbutton" (click)="buttonClickPhotos('✨me✨')">
+                                        Me
+                                    </button>
+                                </div>
+                            }
+                        </div>
+                    } 
                 </div>
             </mat-card>
         }
 
-        <!-- Hauptinhalt (Text-Panel mit deiner app-text Komponente) -->
+        <!-- Hauptinhalt -->
         <div class="archiv-text-panel">
             <app-text></app-text>
         </div>
     </div>
 
-    <!-- HANDY-MODUS ELEMENTE -->
+    <!-- HANDY-MODUS ELEMENTE (Hier wurde optimiert!) -->
     @if (isMobile) {
         <!-- Schwebender runder Menü-Button unten rechts -->
         <button class="mobile-fab" (click)="showMobileMenu = true">
@@ -53,27 +96,76 @@
         <!-- Großes Vollbild-Auswahl-Overlay -->
         @if (showMobileMenu) {
             <div class="mobile-menu-overlay">
+                <!-- Der Schließen-Button hat jetzt einen schönen runden Hintergrund bekommen -->
                 <button class="close-overlay-btn" (click)="showMobileMenu = false">&times;</button>
                 
                 <div class="overlay-content">
-                    <h4>Inhaltsübersicht</h4>
-                    <h4>_____________________</h4>
+                    <h2 align="center">Inhaltsübersicht</h2>
+                    <hr class="separator">
 
-                    <h4>Storys</h4>
-                    <button mat-button class="inhaltsbutton" (click)="buttonClick('Green Winged Hussars')">
-                        Green Winged Hussars
-                    </button>
+                    <!-- ================= MOBILE: STORYS ================= -->
+                    <h3 align="center" class="clickable-header mobile-header" (click)="toggle('storys_m')">
+                        Storys
+                        <span class="arrow" [class.rotated]="isExpanded('storys_m')">▼</span>
+                    </h3>
+                    
+                    @if (isExpanded('storys_m')) {
+                        <div class="mobile-sub-container">
+                            <h4 align="center" class="clickable-header mobile-header" (click)="toggle('warhammer_m')">
+                                Warhammer
+                                <span class="arrow" [class.rotated]="isExpanded('warhammer_m')">▼</span>
+                            </h4>
+                            
+                            @if (isExpanded('warhammer_m')) {
+                                <div class="mobile-button-container">
+                                    <!-- Wenn ein Button geklickt wird, schließt sich das Menü automatisch für besseren Flow -->
+                                    <button mat-raised-button color="primary" class="mobile-inhaltsbutton" (click)="buttonClick('Green Winged Hussars'); showMobileMenu = false">
+                                        Green Winged Hussars
+                                    </button>
+                                </div>
+                            }
+                        </div>
+                    }
 
-                    <h4>Fotos</h4>   
-                    <button mat-button class="inhaltsbutton" (click)="buttonClickPhotos('Toskana')">
-                        Toskana Fotos
-                    </button>
-                    <button mat-button class="inhaltsbutton" (click)="buttonClickPhotos('Abifahrt')">
-                        Abi Fahrt
-                    </button>
-                    <button mat-button class="inhaltsbutton" (click)="buttonClickPhotos('✨me✨')">
-                        Me
-                    </button>
+                    <!-- ================= MOBILE: FOTOS ================= -->
+                    <h3 align="center" class="clickable-header mobile-header" (click)="toggle('fotos_m')">
+                        Fotos
+                        <span class="arrow" [class.rotated]="isExpanded('fotos_m')">▼</span>
+                    </h3>
+                    
+                    @if (isExpanded('fotos_m')) {
+                        <div class="mobile-sub-container">
+                            
+                            <!-- Urlaub -->
+                            <h4 align="center" class="clickable-header mobile-header" (click)="toggle('urlaub_m')">
+                                Urlaub
+                                <span class="arrow" [class.rotated]="isExpanded('urlaub_m')">▼</span>
+                            </h4>
+                            @if (isExpanded('urlaub_m')) {
+                                <div class="mobile-button-container">
+                                    <button mat-raised-button color="primary" class="mobile-inhaltsbutton" (click)="buttonClickPhotos('Toskana'); showMobileMenu = false">
+                                        Toskana Urlaub
+                                    </button>
+                                    <button mat-raised-button color="primary" class="mobile-inhaltsbutton" (click)="buttonClickPhotos('Abifahrt'); showMobileMenu = false">
+                                        Abi Fahrt
+                                    </button>
+                                </div>
+                            }
+
+                            <!-- Sonstiges -->
+                            <h4 align="center" class="clickable-header mobile-header" (click)="toggle('sonstiges_m')">
+                                Sonstiges
+                                <span class="arrow" [class.rotated]="isExpanded('sonstiges_m')">▼</span>
+                            </h4>
+                            @if (isExpanded('sonstiges_m')) {
+                                <div class="mobile-button-container">
+                                    <button mat-raised-button color="primary" class="mobile-inhaltsbutton" (click)="buttonClickPhotos('✨me✨'); showMobileMenu = false">
+                                        Me
+                                    </button>
+                                </div>
+                            }
+                        </div>
+                    }
                 </div>
             </div>
         }

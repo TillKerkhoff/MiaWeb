@@ -17,7 +17,8 @@ export class ArchivComponent implements OnInit, OnDestroy {
   private breakpointObserver = inject(BreakpointObserver);
   private interactionService = inject(TextInteractionService);
   private cdr = inject(ChangeDetectorRef);
-  private platformId = inject(PLATFORM_ID); // <-- Plattform-ID injizieren
+  private platformId = inject(PLATFORM_ID);
+  expandedStates: { [key: string]: boolean } = {};
 
   isMobile = false;
   showMobileMenu = false; 
@@ -43,6 +44,15 @@ export class ArchivComponent implements OnInit, OnDestroy {
   buttonClickPhotos(folderName: string): void {
     this.interactionService.loadPhotos(folderName);
     this.showMobileMenu = false; 
+  }
+
+  toggle(key: string) {
+  // Kehrt den aktuellen Zustand um (falls undefined/false -> true, falls true -> false)
+  this.expandedStates[key] = !this.expandedStates[key];
+  }
+
+  isExpanded(key: string): boolean {
+    return !!this.expandedStates[key];
   }
 
   ngOnDestroy(): void {
