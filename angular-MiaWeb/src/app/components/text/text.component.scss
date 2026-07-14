@@ -41,7 +41,7 @@
 
 .inner-card {
   flex: 0 0 45%;          // Bleibt bei maximal 45% Breite
-  max-width: 45%;         // Garantiert die maximale Breite von 45%
+  max-width: 30%;         // Garantiert die maximale Breite von 45%
   
   // GEÄNDERT: Die feste Höhe fliegt raus, damit die Box mit dem Bild wachsen darf!
   height: auto;           

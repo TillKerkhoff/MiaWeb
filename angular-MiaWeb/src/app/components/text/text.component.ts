@@ -161,7 +161,6 @@ export class TextComponent implements OnInit, OnDestroy {
       align-items: center;
       background: #1e1e1e;
       padding: 4px; 
-      border-radius: 12px;
       overflow: hidden; 
     }
 
