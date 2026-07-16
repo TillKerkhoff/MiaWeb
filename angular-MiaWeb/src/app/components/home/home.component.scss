@@ -1,1 +1,49 @@
+.home-header {
+    position: sticky;
+    top: 0.75rem;
+    left: 0.75rem;
+    right: 0.75rem;
+    z-index: 10;
+    margin: 0;
+    padding: 0.8rem 1.25rem;
+    box-sizing: border-box;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #1e1e1e 0%, #2d1b3d 100%);
+    min-height: 96px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 1px 0px rgba(200, 77, 255, 0.3);
+    border: 1px solid rgba(200, 77, 255, 0.3);
 
+  h1 {
+    margin: 0.5rem 0;
+    color: #ffffff;
+    font-size: 2rem;
+    letter-spacing: 0.5px;
+  }
+
+  p {
+    margin: 0.5rem 0 0;
+    color: #b0b0b0;
+    font-size: 0.95rem;
+  }
+}
+
+.werBinIch-demo{
+    width: 25%;
+    margin-top: 1.25rem;
+    padding: 0.8rem 1.25rem;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #1e1e1e 0%, #2d1b3d 100%);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 1px 0px rgba(200, 77, 255, 0.3);
+    border: 1px solid rgba(200, 77, 255, 0.3);
+
+    h2 {
+        margin: 0.5rem 0;
+        color: #ffffff;
+    }
+
+    p {
+        margin: 0.5rem 0 0;
+        color: #b0b0b0;
+        font-size: 0.95rem;
+    }
+}

@@ -22,10 +22,11 @@ export class TextComponent implements OnInit, OnDestroy {
   private platformId = inject(PLATFORM_ID); // <-- Plattform-ID injiziert
   private subscription!: Subscription;
   currentView: 'text' | 'photos' = 'text';
-  images: string[] = [];
+  images: Subchapter[] = [];
   private photoSubscription!: Subscription;
 
   constructor(private interactionService: TextInteractionService) {}
+  
 
   ngOnInit(): void {
     this.loadDefaultText();
@@ -81,29 +82,32 @@ export class TextComponent implements OnInit, OnDestroy {
   }
 
   loadPhotos(foldername: string) {
-    this.fileName = foldername;
-    this.currentView = 'photos';
-    this.images = []; 
+  this.fileName = foldername;
+  this.currentView = 'photos';
+  this.images = []; 
 
-    // Nur im Browser ausführen (verhindert Prerender-Fehler)
-    if (isPlatformBrowser(this.platformId)) {
-      this.http.get<string[]>(`assets/fotos/${foldername}/images.json`).subscribe({
-        next: (imageNames) => {
-          this.images = [];
-          this.cdr.detectChanges();
+  if (isPlatformBrowser(this.platformId)) {
+    // Wir erwarten nun ein Array von Objekten mit "title" und "images"
+    this.http.get<{ title: string, images: string[] }[]>(`assets/fotos/${foldername}/images.json`).subscribe({
+      next: (chapters) => {
+        this.images = [];
+        this.cdr.detectChanges();
 
-          const neuePfade = imageNames.map(name => `assets/fotos/${foldername}/${name}`);
-          this.images = [...neuePfade];
-          
-          this.cdr.markForCheck(); 
-          this.cdr.detectChanges();
-        },
-        error: (err) => {
-          console.error(`Konnte images.json für ${foldername} nicht laden:`, err);
-        }
-      });
-    }
+        // Pfade für jedes Bild innerhalb der Kapitel generieren
+        this.images = chapters.map(chapter => ({
+          title: chapter.title,
+          images: chapter.images.map(imgName => `assets/fotos/${foldername}/${imgName}`)
+        }));
+        
+        this.cdr.markForCheck(); 
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error(`Konnte images.json für ${foldername} nicht laden:`, err);
+      }
+    });
   }
+}
 
   ngOnDestroy() {
     if (this.subscription) {
@@ -122,6 +126,11 @@ export class TextComponent implements OnInit, OnDestroy {
       maxWidth: '90vw'
     });
   }
+}
+
+export interface Subchapter {
+  title: string;
+  images: string[]; // Speichert die fertigen Pfade zu den Bildern
 }
 
 @Component({

@@ -1,4 +1,3 @@
-
 @if (currentView === 'text') {
 
 <mat-card class="text-panel-card" appearance="outlined">
@@ -12,26 +11,44 @@
 
 } @else if (currentView === 'photos') {
   
-  <!-- DAS NEUE HTML FÜR DIE FOTO-GALERIE -->
   <mat-card class="text-panel-card" appearance="outlined">
     <div>
       <h1 align="center">Foto von {{ fileName }}</h1>
     </div>
 
     <mat-card-content class="scroll-container">
-      <div class="image-grid">
-        @for (img of images; track img) {
-          <mat-card class="inner-card">
-            <mat-card-content>
-              <img 
-                [src]="img" 
-                alt="Galerie Foto" 
-                class="gallery-img"
-                (click)="openImagePopup(img)">
-            </mat-card-content>
-          </mat-card>
-        }
-      </div>
+      
+      <!-- Äußere Schleife: Geht durch jedes Unterkapitel aus der JSON -->
+      @for (chapter of images; track chapter.title) {
+        <div class="subchapter-section" style="margin-bottom: 32px;">
+          
+          <!-- Kapitelüberschrift -->
+          <h2 class="subchapter-title" align="center">
+            {{ chapter.title }}
+          </h2>
+          
+          <!-- Innere Schleife: Rendert alle Bilder dieses Kapitels in das gewohnte Grid -->
+          <div class="image-grid">
+            @for (img of chapter.images; track img) {
+              <mat-card class="inner-card">
+                <mat-card-content>
+                  <img 
+                    [src]="img" 
+                    alt="Galerie Foto" 
+                    class="gallery-img"
+                    (click)="openImagePopup(img)">
+                </mat-card-content>
+              </mat-card>
+            }
+          </div>
+
+        </div>
+      } @empty {
+        <div style="text-align: center; padding: 40px; color: #888;">
+          <p>Keine Bilder in dieser Galerie vorhanden.</p>
+        </div>
+      }
+
     </mat-card-content>
   </mat-card>
 }

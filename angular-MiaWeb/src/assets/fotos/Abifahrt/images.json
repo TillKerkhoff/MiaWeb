@@ -1,19 +1,48 @@
 [
-    "abendessen1.png",
-    "aussicht.png",
-    "florenzArt.png",
-    "florenzArt2.png",
-    "florenzBrücke.png",
-    "florenzBurg.png",
-    "florenzKirche.png",
-    "florenzKirche1.png",
-    "florenzStraße1.png",
-    "frühstück.png",
-    "kirche1.png",
-    "pisaKirche1.png",
-    "pisaKirche2.png",
-    "pisaKirche3.png",
-    "pisaKirche4.png",
-    "pisaKirche5.png",
-    "pool1.png"
+    {
+        "title": "Tag 1",
+        "images": [
+            "abendessen1.png"
+        ]
+    },
+
+    {
+        "title": "Unterkunft",
+        "images": [
+            "aussicht.png",
+            "frühstück.png",
+            "pool1.png"
+        ]
+    },
+
+    {
+        "title": "Florenze Tour",
+        "images": [
+            "florenzArt.png",
+            "florenzArt2.png",
+            "florenzBrücke.png",
+            "florenzBurg.png",
+            "florenzKirche.png",
+            "florenzKirche1.png",
+            "florenzStraße1.png"
+        ]
+    },
+
+    {
+        "title": "Pisa Tour",
+        "images": [
+            "pisaKirche1.png",
+            "pisaKirche2.png",
+            "pisaKirche3.png",
+            "pisaKirche4.png",
+            "pisaKirche5.png"
+        ]
+    },
+
+    {
+        "title": "Sonstiges",
+        "images": [
+            "kirche1.png"
+        ]
+    }
 ]
