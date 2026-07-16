@@ -87,32 +87,30 @@ loadPhotos(foldername: string) {
     this.images = []; 
 
     if (isPlatformBrowser(this.platformId)) {
-      // Wir holen uns das JSON als "any", um flexibel auf Fehler reagieren zu können
-      this.http.get<any[]>(`assets/fotos/${foldername}/images.json`).subscribe({
-        next: (chapters) => {
+      this.http.get<any>(`assets/fotos/${foldername}/images.json`).subscribe({
+        next: (data) => {
+          // DAS HIER ZEIGT UNS GENAU, WAS IM BROWSER ANKOMMT:
+          console.log('Geladene JSON-Daten:', data);
+
           this.images = [];
           this.cdr.detectChanges();
 
-          if (!Array.isArray(chapters)) {
-            console.error('Die geladene images.json ist kein Array!');
-            return;
-          }
+          // Sicherstellen, dass wir mit einem Array arbeiten
+          const chapters = Array.isArray(data) ? data : (data.chapters || []);
 
-          // Wir mappen die Kapitel und sichern uns gegen fehlende "images" oder "titel" ab
-          this.images = chapters.map(chapter => {
-            // Falls "images" im JSON fehlt oder kein Array ist, nutzen wir ein leeres Array []
-            const rawImages: string[] = Array.isArray(chapter.images) ? chapter.images : [];
-            
-            // Toleranz für "titel" (DE) und "title" (EN)
+          this.images = chapters.map((chapter: any) => {
+            // Debugging für jedes einzelne Kapitel
+            console.log('Verarbeite Kapitel:', chapter);
+
+            const rawImages = Array.isArray(chapter.images) ? chapter.images : [];
             const chapterTitle = chapter.title || chapter.titel || 'Unbenanntes Kapitel';
 
             return {
               title: chapterTitle,
-              // Hier sagen wir TypeScript explizit, dass imgName ein string ist
               images: rawImages.map((imgName: string) => `assets/fotos/${foldername}/${imgName}`)
             };
           });
-                    
+          
           this.cdr.markForCheck(); 
           this.cdr.detectChanges();
         },
