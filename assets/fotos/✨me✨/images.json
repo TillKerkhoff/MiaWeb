@@ -1,4 +1,9 @@
 [
-    "selfiToskana.png",
-    "cringeSelfi.png"
+    {
+        "title": "Selfis",
+        "images": [
+            "selfiToskana.png",
+            "cringeSelfi.png"
+        ]
+    }
 ]
