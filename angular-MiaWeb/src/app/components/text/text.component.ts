@@ -81,33 +81,47 @@ export class TextComponent implements OnInit, OnDestroy {
     }
   }
 
-  loadPhotos(foldername: string) {
-  this.fileName = foldername;
-  this.currentView = 'photos';
-  this.images = []; 
+loadPhotos(foldername: string) {
+    this.fileName = foldername;
+    this.currentView = 'photos';
+    this.images = []; 
 
-  if (isPlatformBrowser(this.platformId)) {
-    // Wir erwarten nun ein Array von Objekten mit "title" und "images"
-    this.http.get<{ title: string, images: string[] }[]>(`assets/fotos/${foldername}/images.json`).subscribe({
-      next: (chapters) => {
-        this.images = [];
-        this.cdr.detectChanges();
+    if (isPlatformBrowser(this.platformId)) {
+      // Wir holen uns das JSON als "any", um flexibel auf Fehler reagieren zu können
+      this.http.get<any[]>(`assets/fotos/${foldername}/images.json`).subscribe({
+        next: (chapters) => {
+          this.images = [];
+          this.cdr.detectChanges();
 
-        // Pfade für jedes Bild innerhalb der Kapitel generieren
-        this.images = chapters.map(chapter => ({
-          title: chapter.title,
-          images: chapter.images.map(imgName => `assets/fotos/${foldername}/${imgName}`)
-        }));
-        
-        this.cdr.markForCheck(); 
-        this.cdr.detectChanges();
-      },
-      error: (err) => {
-        console.error(`Konnte images.json für ${foldername} nicht laden:`, err);
-      }
-    });
+          if (!Array.isArray(chapters)) {
+            console.error('Die geladene images.json ist kein Array!');
+            return;
+          }
+
+          // Wir mappen die Kapitel und sichern uns gegen fehlende "images" oder "titel" ab
+          this.images = chapters.map(chapter => {
+            // Falls "images" im JSON fehlt oder kein Array ist, nutzen wir ein leeres Array []
+            const rawImages: string[] = Array.isArray(chapter.images) ? chapter.images : [];
+            
+            // Toleranz für "titel" (DE) und "title" (EN)
+            const chapterTitle = chapter.title || chapter.titel || 'Unbenanntes Kapitel';
+
+            return {
+              title: chapterTitle,
+              // Hier sagen wir TypeScript explizit, dass imgName ein string ist
+              images: rawImages.map((imgName: string) => `assets/fotos/${foldername}/${imgName}`)
+            };
+          });
+                    
+          this.cdr.markForCheck(); 
+          this.cdr.detectChanges();
+        },
+        error: (err) => {
+          console.error(`Konnte images.json für ${foldername} nicht laden:`, err);
+        }
+      });
+    }
   }
-}
 
   ngOnDestroy() {
     if (this.subscription) {
